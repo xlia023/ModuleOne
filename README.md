@@ -16,27 +16,29 @@ Once you are on the Remix website, create a new file by clicking the "+" icon in
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract Salinas {
-    uint256 public balance;
-    
-    // Function to deposit Ether
-    function deposit(uint256 amount) public {
-        // Using require to check if the amount is greater than zero
-        require(amount > 0, "Amount must be greater than zero");
-        balance += amount;
+contract Flowershop {
+    uint256 public totalofflowerorder;
+    event setNumber(uint256 newValue);
+
+    function MakeOrder(uint256 order) external {
+        validateInput(order);
+        validateInternalState(order);
+        totalofflowerorder = order;
+        emit setNumber(order);
     }
-    
-    // Function to withdraw Ether
-    function withdraw(uint256 amount) public {
-        // Using require to check if the amount is available in the balance
-        require(amount <= balance, "Insufficient balance");
-        assert(balance >= amount);
-        balance -= amount;
-        
-        // Using revert with a custom error message
-        if (balance < 100) {
-            revert("Minimum balance requirement not met");
+
+    function validateInput(uint256 order) internal pure {
+        require(order > 10, "Input your order quantity in the cart");
+        if (order > 50) {
+            revert("Are you sure of your order?");
         }
+        if (order != 0) {
+            revert("Insufficient quantity available");
+        }
+    }
+
+    function validateInternalState(uint256 order) internal view {
+        assert(totalofflowerorder + order > totalofflowerorder);
     }
 }
 ```
