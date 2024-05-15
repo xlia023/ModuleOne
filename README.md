@@ -13,19 +13,19 @@ You can use Remix, an online Solidity IDE to run this program. To get started, g
 
 Once you are on the Remix website, create a new file by clicking the "+" icon in the left-hand sidebar. Save the file with a .sol extension (e.g., salinas.sol). Copy and paste the following code into the file:
  ```
-    // SPDX-License-Identifier: MIT
+        // SPDX-License-Identifier: MIT
     pragma solidity ^0.8.0;
 
     contract Salinas {
         struct Flower {
-            string name;
-            uint256 quantity;
+            string FlowerName;
+            uint256 Quantity;
         }
 
         mapping(string => Flower) public Flowers;
         uint256 public TotalofFlowerOrder;
         event setNumber(uint256 newValue);
-        event FlowerRestocked(string flowerName, uint256 quantity);
+        event FlowerRestocked(string FlowerName, uint256 Quantity);
 
 
         function MakeOrder(uint256 order) external {
@@ -42,14 +42,14 @@ Once you are on the Remix website, create a new file by clicking the "+" icon in
             }
         }
 
-        function RestockFlowers(string memory name, uint256 quantity) public {
-            require(bytes(name).length > 0, "Flower name cannot be empty");
-            require(quantity > 0, "Quantity must be greater than zero");
+        function RestockFlowers(string memory FlowerName, uint256 Quantity) public {
+            require(bytes(FlowerName).length > 0, "Flower name cannot be empty");
+            require(Quantity > 0, "Quantity must be greater than zero");
             
-            Flower storage flower = Flowers[name];
-            flower.quantity += quantity;
+            Flower storage flower = Flowers[FlowerName];
+            flower.Quantity += Quantity;
             
-            emit FlowerRestocked(name, quantity);
+            emit FlowerRestocked(FlowerName, Quantity);
         }
 
         function validateInternalState(uint256 order) internal view {
