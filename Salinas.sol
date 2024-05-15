@@ -10,7 +10,7 @@
         mapping(string => Flower) public Flowers;
         uint256 public TotalofFlowerOrder;
         event setNumber(uint256 newValue);
-        event FlowerRestocked(string FlowerName, uint256 Quantity);
+        event FlowerRestocked(string Flower, uint256 Quantity);
 
 
         function MakeOrder(uint256 order) external {
