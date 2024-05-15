@@ -13,7 +13,7 @@ You can use Remix, an online Solidity IDE to run this program. To get started, g
 
 Once you are on the Remix website, create a new file by clicking the "+" icon in the left-hand sidebar. Save the file with a .sol extension (e.g., salinas.sol). Copy and paste the following code into the file:
  ```
-        // SPDX-License-Identifier: MIT
+    // SPDX-License-Identifier: MIT
     pragma solidity ^0.8.0;
 
     contract Salinas {
@@ -25,7 +25,7 @@ Once you are on the Remix website, create a new file by clicking the "+" icon in
         mapping(string => Flower) public Flowers;
         uint256 public TotalofFlowerOrder;
         event setNumber(uint256 newValue);
-        event FlowerRestocked(string FlowerName, uint256 Quantity);
+        event FlowerRestocked(string Flower, uint256 Quantity);
 
 
         function MakeOrder(uint256 order) external {
