@@ -13,34 +13,49 @@ You can use Remix, an online Solidity IDE to run this program. To get started, g
 
 Once you are on the Remix website, create a new file by clicking the "+" icon in the left-hand sidebar. Save the file with a .sol extension (e.g., salinas.sol). Copy and paste the following code into the file:
  ```
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+    // SPDX-License-Identifier: MIT
+    pragma solidity ^0.8.0;
 
-contract Flowershop {
-    uint256 public totalofflowerorder;
-    event setNumber(uint256 newValue);
-
-    function MakeOrder(uint256 order) external {
-        validateInput(order);
-        validateInternalState(order);
-        totalofflowerorder = order;
-        emit setNumber(order);
-    }
-
-    function validateInput(uint256 order) internal pure {
-        require(order > 10, "Input your order quantity in the cart");
-        if (order > 50) {
-            revert("Are you sure of your order?");
+    contract Salinas {
+        struct Flower {
+            string name;
+            uint256 quantity;
         }
-        if (order != 0) {
-            revert("Insufficient quantity available");
+
+        mapping(string => Flower) public Flowers;
+        uint256 public TotalofFlowerOrder;
+        event setNumber(uint256 newValue);
+        event FlowerRestocked(string flowerName, uint256 quantity);
+
+
+        function MakeOrder(uint256 order) external {
+            validateInput(order);
+            validateInternalState(order);
+            TotalofFlowerOrder = order;
+            emit setNumber(order);
+        }
+
+        function validateInput(uint256 order) internal pure {
+            require(order != 0, "Input your order quantity in the cart");
+            if (order > 50) {
+                revert("Are you sure of your order?");
+            }
+        }
+
+        function RestockFlowers(string memory name, uint256 quantity) public {
+            require(bytes(name).length > 0, "Flower name cannot be empty");
+            require(quantity > 0, "Quantity must be greater than zero");
+            
+            Flower storage flower = Flowers[name];
+            flower.quantity += quantity;
+            
+            emit FlowerRestocked(name, quantity);
+        }
+
+        function validateInternalState(uint256 order) internal view {
+            assert(TotalofFlowerOrder + order > TotalofFlowerOrder);
         }
     }
-
-    function validateInternalState(uint256 order) internal view {
-        assert(totalofflowerorder + order > totalofflowerorder);
-    }
-}
 ```
 
 ### Code Explanation
